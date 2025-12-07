@@ -12,8 +12,8 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import ReportsPage from "./pages/ReportsPage";
 import ClientDetailPage from "./components/detail-pages/ClientDetailPage";
 import CompanyDetailPage from "./components/detail-pages/CompanyDetailPage";
-import SignInPage from "./pages/SignInPage"
-import RegisterPage from "./pages/RegisterPage"
+import SignInPage from "./auth/SignInPage"
+import RegisterPage from "./auth/RegisterPage"
 
 function App() {
   return (
