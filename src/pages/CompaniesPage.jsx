@@ -138,65 +138,75 @@ const CompaniesPage = () => {
 
   return (
     <>
-      <div className="p-4 lg:p-8 max-w-[1600px] mx-auto">
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-[#2f362f] mb-3">
-            <span>Dashboard</span>
+      <div className="p-2 sm:p-4 md:p-6 lg:p-8 max-w-[1600px] mx-auto">
+        <div className="mb-4 sm:mb-6 lg:mb-8">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-[#2f362f] mb-2 sm:mb-3">
+            <button 
+            onClick={() => navigate('/')}
+            className="hover:text-[#2f362f]/60 transition-colors"
+          >
+            Dashboard
+          </button>
             <span>/</span>
             <span className="text-[#2f362f] font-medium">Companies</span>
           </div>
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+          <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-4xl font-bold text-[#2f362f] mb-2 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2f362f] mb-1 sm:mb-2 tracking-tight">
                 All Companies
               </h1>
-              <p className="text-[#2f362f] text-lg">
+              <p className="text-[#2f362f] text-sm sm:text-base lg:text-lg">
                 {companies.length} companies across {industries.length - 1}{" "}
                 industries
               </p>
             </div>
 
-            <div className="flex gap-3 flex-wrap">
+            {/* Search, Filter and Add button - all in one row */}
+            <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#2f362f]" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-[#2f362f] cursor-pointer" />
                 <input
                   type="text"
                   placeholder="Search companies..."
                   value={searchTerm}
                   onChange={(e) => dispatch(setSearchTerm(e.target.value))}
-                  className="pl-10 pr-4 py-2 border border-[#BCC8BC] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64"
+                  className="pl-9 sm:pl-10 pr-4 py-2 border border-[#BCC8BC] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-44 sm:w-48 lg:w-64 text-sm"
                 />
               </div>
-              <select
-                value={filterIndustry}
-                onChange={(e) => dispatch(setFilterIndustry(e.target.value))}
-                className="px-2.5 py-2.5 border border-[#BCC8BC] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                {industries.map((industry) => (
-                  <option key={industry} value={industry}>
-                    {industry}
-                  </option>
-                ))}
-              </select>
-              <button
-                onClick={() => openCompanyEdit()}
-                className="px-2.5 py-2 bg-blue-200 text-[#2f362f] rounded-md font-semibold flex items-center gap-2 transition-all  text-sm"
-              >
-                <Plus className="w-4 h-4" />
-                Add Company
-              </button>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <select
+                  value={filterIndustry}
+                  onChange={(e) => dispatch(setFilterIndustry(e.target.value))}
+                  className="px-2 sm:px-2.5 py-2 border border-[#BCC8BC] rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                >
+                  {industries.map((industry) => (
+                    <option key={industry} value={industry}>
+                      {industry}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={() => openCompanyEdit()}
+                  className="px-2.5 py-2 bg-blue-200 text-[#2f362f] rounded-md font-semibold flex items-center gap-1 sm:gap-2 transition-all cursor-pointer text-sm whitespace-nowrap"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="hidden sm:inline">Add Company</span>
+                  <span className="sm:hidden">Add</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        {/* Company Cards Grid - Responsive 1 to 4 columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
           {companies.map((company) => {
             const colors =
               industryColors[company.industry] || industryColors.Technology;
             return (
               <div
                 key={company.id}
-                className="bg-[#f8faf9] rounded-lg p-6 shadow-sm border border-[#BCC8BC] hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="bg-[#f8faf9] rounded-lg p-4 sm:p-5 lg:p-6 shadow-sm border border-[#BCC8BC] hover:shadow-lg transition-all duration-300 cursor-pointer"
                 onClick={() => openCompanyDetail(company)}
               >
                 <div className="flex items-start justify-between mb-4">

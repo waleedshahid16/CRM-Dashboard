@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const uiSLice = createSlice({
   name: "ui",
   initialState: {
-    sidebarOpen: true,
+    sidebarOpen: false, // Closed by default for mobile-first experience
     modalOpen: false,
     theme: "light",
   },

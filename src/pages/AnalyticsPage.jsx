@@ -31,6 +31,7 @@ import {
   Award,
   Activity,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Mock selectors - replace with your actual selectors
 const selectAllClients = (state) => state?.clients?.clients || [];
@@ -39,6 +40,7 @@ const selectAllDeals = (state) => state?.deals?.deals || [];
 const selectAllTasks = (state) => state?.tasks?.tasks || [];
 
 const AnalyticsPage = () => {
+  const navigate = useNavigate();
   // Get data from Redux
   const clients = useSelector(selectAllClients);
   const companies = useSelector(selectAllCompanies);
@@ -245,7 +247,12 @@ const AnalyticsPage = () => {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-2 text-sm text-[#2f362f] mb-3">
-          <span>Dashboard</span>
+          <button
+            onClick={() => navigate("/")}
+            className="hover:text-[#2f362f]/60  transition-colors"
+          >
+            Dashboard
+          </button>
           <span>/</span>
           <span className="text-[#2f362f] font-medium">Analytics</span>
         </div>

@@ -44,24 +44,25 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-full bg-[#2f362f] border-r border-[#2f362f] transition-all duration-300 z-50 ${
-          isOpen ? "w-64" : "w-0 lg:w-20"
+        className={`fixed left-0 top-0 h-full bg-[#2f362f] border-r border-[#2f362f] transition-all duration-300 z-40 ${
+          isOpen ? "w-64 translate-x-0" : "-translate-x-full lg:translate-x-0 lg:w-20"
         }`}
+        style={{
+          boxShadow: isOpen ? '2px 0 10px rgba(0, 0, 0, 0.1)' : 'none'
+        }}
       >
         <div className="flex flex-col h-full">
           {/* Logo Section */}
-          <div className="h-16 flex items-center justify-between px-4 border-b border-[#2f362f]">
-            {isOpen && (
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-linear-to-br bg-white rounded-lg flex items-center justify-center">
-                  <Users className="w-4 h-4 text-black" />
-                </div>
-                <span className="font-bold text-white">ClientHub</span>
+          <div className="h-16 flex items-center justify-between px-4 border-b border-[#2f362f] overflow-hidden">
+            <div className={`flex items-center gap-3 transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0 lg:opacity-100 w-full'}`}>
+              <div className="w-8 h-8 bg-white rounded-lg shrink-0 flex items-center justify-center">
+                <Users className="w-4 h-4 text-black" />
               </div>
-            )}
+              {isOpen && <span className="font-bold text-white whitespace-nowrap">ClientHub</span>}
+            </div>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-[#2f362f]/60 rounded-lg transition-colors"
             >
               {isOpen ? (
                 <ChevronLeft className="w-5 h-5 text-white" />

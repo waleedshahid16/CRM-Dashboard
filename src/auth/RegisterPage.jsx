@@ -378,7 +378,7 @@ const RegisterPage = () => {
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-[#2f362f]">
         {/* CRM Image - Full coverage */}
         <img
-          src="/src/assets/sign-in-pic/crm.png"
+          src="/src/assets/sign-in-pic/crm.webp"
           alt="CRM Dashboard"
           className="w-full h-full object-cover"
         />

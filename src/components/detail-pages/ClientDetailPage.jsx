@@ -34,7 +34,7 @@ const DeleteConfirmDialog = ({ isOpen, onClose, onConfirm, clientName }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-[#FEFDFC] rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div className="bg-[#FEFDFC] rounded-lg shadow-2xl w-full max-w-md mx-4 overflow-hidden animate-in fade-in zoom-in duration-200">
         {/* Header */}
         <div className="bg-red-50 p-6 border-b border-red-100">
           <div className="flex items-center gap-4">
@@ -68,13 +68,13 @@ const DeleteConfirmDialog = ({ isOpen, onClose, onConfirm, clientName }) => {
         <div className="bg-red-50 px-6 py-4 flex gap-3 justify-end border-t border-red-100">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 border-2 border-[#BCC8BC] text-[#2f362f] rounded-md font-semibold hover:bg-slate-100 transition-colors"
+            className="px-2.5 py-2 border-2 border-[#BCC8BC] text-[#2f362f] rounded-md font-semibold hover:bg-slate-100 transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="px-5 py-2.5 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700 transition-colors flex items-center gap-2 shadow-lg shadow-red-500/30"
+            className="px-2.5 py-2 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700 transition-colors flex items-center gap-2 shadow-lg shadow-red-500/30"
           >
             <Trash2 className="w-4 h-4" />
             Delete Client
@@ -257,7 +257,7 @@ const ClientDetailPage = () => {
 
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
-            <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
                 <div className="w-12 h-12 rounded-xl bg-[#FEFDFC] flex items-center justify-center">
                   <Briefcase className="w-6 h-6 text-blue-600" />
@@ -272,7 +272,7 @@ const ClientDetailPage = () => {
               <p className="text-sm text-[#2f362f]/70">Total Deals</p>
             </div>
 
-            <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
                 <div className="w-12 h-12 rounded-xl bg-[#FEFDFC] flex items-center justify-center">
                   <DollarSign className="w-6 h-6 text-green-600" />
@@ -287,7 +287,7 @@ const ClientDetailPage = () => {
               <p className="text-sm text-[#2f362f]/70">Value</p>
             </div>
 
-            <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
                 <div className="w-12 h-12 rounded-xl bg-[#FEFDFC] flex items-center justify-center">
                   <Target className="w-6 h-6 text-purple-600" />
@@ -302,7 +302,7 @@ const ClientDetailPage = () => {
               <p className="text-sm text-[#2f362f]/70">Deals Won</p>
             </div>
 
-            <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
                 <div className="w-12 h-12 rounded-xl bg-[#FEFDFC] flex items-center justify-center">
                   <FileText className="w-6 h-6 text-yellow-600" />
@@ -323,7 +323,7 @@ const ClientDetailPage = () => {
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2 space-y-6">
               {/* Client Overview Card */}
-              <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm">
+              <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm">
                 <h2 className="text-xl font-bold text-[#2f362f] mb-6 flex items-center gap-2">
                   <User className="w-5 h-5 text-[#2f362f]/70" />
                   Client Overview
@@ -470,7 +470,7 @@ const ClientDetailPage = () => {
 
               {/* Lead Score */}
               {client.leadScore !== undefined && (
-                <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm">
+                <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm">
                   <h2 className="text-xl font-bold text-[#2f362f] mb-4 flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-[#2f362f]/70" />
                     Lead Score
@@ -512,7 +512,7 @@ const ClientDetailPage = () => {
 
               {/* Reviews */}
               {client.reviews > 0 && (
-                <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm">
+                <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm">
                   <h2 className="text-xl font-bold text-[#2f362f] mb-4 flex items-center gap-2">
                     <Award className="w-5 h-5 text-[#2f362f]/70" />
                     Reviews
@@ -537,7 +537,7 @@ const ClientDetailPage = () => {
 
               {/* Description */}
               {client.description && (
-                <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm">
+                <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm">
                   <h2 className="text-xl font-bold text-[#2f362f] mb-4 flex items-center gap-2">
                     <FileText className="w-5 h-5 text-[#2f362f]/70" />
                     Description
@@ -550,7 +550,7 @@ const ClientDetailPage = () => {
 
               {/* Tags */}
               {client.tags && client.tags.length > 0 && (
-                <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm">
+                <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm">
                   <h2 className="text-xl font-bold text-[#2f362f] mb-4 flex items-center gap-2">
                     <Tag className="w-5 h-5 text-[#2f362f]/70" />
                     Tags
@@ -572,7 +572,7 @@ const ClientDetailPage = () => {
             {/* Right Column - Sidebar */}
             <div className="space-y-6">
               {/* Activity Timeline */}
-              <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm">
+              <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm">
                 <h2 className="text-xl font-bold text-[#2f362f] mb-6 flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-[#2f362f]/70" />
                   Timeline
@@ -604,7 +604,7 @@ const ClientDetailPage = () => {
               </div>
 
               {/* Recent Deals */}
-              <div className="bg-[#FEFDFC] rounded-2xl p-6 border border-[#BCC8BC] shadow-sm">
+              <div className="bg-[#FEFDFC] rounded-lg p-6 border border-[#BCC8BC] shadow-sm">
                 <h2 className="text-xl font-bold text-[#2f362f] mb-4 flex items-center gap-2">
                   <Briefcase className="w-5 h-5 text-[#2f362f]/70" />
                   Recent Deals ({metrics.relatedDeals.length})
