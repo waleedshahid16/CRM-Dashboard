@@ -1,12 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/static-components */
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import {
   BarChart,
   Bar,
-  LineChart,
-  Line,
   PieChart,
   Pie,
   Cell,
@@ -14,10 +12,9 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
-  Area,
   AreaChart,
+  Area
 } from "recharts";
 import {
   TrendingUp,
@@ -25,11 +22,11 @@ import {
   DollarSign,
   Users,
   Briefcase,
-  CheckCircle2,
-  Clock,
   Target,
   Award,
   Activity,
+  Clock,
+  CheckCircle2
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -346,7 +343,15 @@ const AnalyticsPage = () => {
                   boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
                 }}
               />
-              <Bar dataKey="count" fill="#667eea" radius={[8, 8, 0, 0]} />
+              <Bar 
+                dataKey="count" 
+                fill="#667eea" 
+                radius={[4, 4, 0, 0]}
+                barSize={30}
+                style={{
+                  filter: 'drop-shadow(0 2px 2px rgba(102, 126, 234, 0.2))'
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>

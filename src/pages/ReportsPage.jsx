@@ -297,6 +297,10 @@ const ReportsPage = () => {
                   fill="#667eea"
                   radius={[4, 4, 0, 0]}
                   name="Number of Deals"
+                  barSize={25}
+                  style={{
+                    filter: 'drop-shadow(0 2px 2px rgba(102, 126, 234, 0.2))'
+                  }}
                 >
                   {dealsByStage.map((entry, index) => (
                     <Cell
@@ -375,91 +379,101 @@ const ReportsPage = () => {
         </div>
       </div>
 
-      {/* Tasks Overview - Updated to match TasksPage statuses */}
-      <div className="bg-[#FEFDFC] rounded-lg p-6 shadow-sm border border-[#BCC8BC] mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-lg font-bold text-[#2f362f]">Tasks Overview</h3>
-            <p className="text-sm text-[#2f362f]">
-              Distribution of tasks by status (Active, On Hold, Completed,
-              Cancelled)
-            </p>
-          </div>
-          <CheckCircle className="w-5 h-5 text-blue-600" />
-        </div>
-        <div className="h-80">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={tasksByStatus}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-              <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#fff",
-                  border: "1px solid #e2e8f0",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                }}
-              />
-              <Bar dataKey="count" radius={[4, 4, 0, 0]} name="Number of Tasks">
-                {tasksByStatus.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={
-                      COLORS.taskStatus[entry.name] ||
-                      COLORS.primary[index % COLORS.primary.length]
-                    }
-                  />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="bg-[#FEFDFC] rounded-lg p-6 shadow-sm border border-[#BCC8BC]">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-lg font-bold text-[#2f362f]">
-              Recent Activity
-            </h3>
-            <p className="text-sm text-[#2f362f]">
-              Latest updates across the system
-            </p>
-          </div>
-          <Clock className="w-5 h-5 text-[#2f362f]" />
-        </div>
-        <div className="space-y-4">
-          {[...deals, ...tasks, ...clients].slice(0, 5).map((item, index) => (
-            <div
-              key={index}
-              className="flex items-start p-3  rounded-lg transition-colors"
-            >
-              <div className="p-2 bg-blue-100 rounded-lg mr-4">
-                {item.dealName ? (
-                  <Briefcase className="w-5 h-5 text-blue-600" />
-                ) : item.title ? (
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                ) : (
-                  <Users className="w-5 h-5 text-purple-600" />
-                )}
-              </div>
-              <div className="flex-1">
-                <h4 className="font-medium text-[#2f362f]">
-                  {item.dealName || item.title || item.name || "New item"}
-                </h4>
-                <p className="text-sm text-[#2f362f]">
-                  {item.status && `Status: ${item.status} • `}
-                  {item.dealValue && `Value: ${item.dealValue} • `}
-                  {item.dueDate && `Due: ${item.dueDate}`}
-                </p>
-              </div>
-              <span className="text-xs text-[#2f362f]">
-                {new Date().toLocaleDateString()}
-              </span>
+      {/* Tasks Overview and Recent Activity in a row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        {/* Tasks Overview - Updated to match TasksPage statuses */}
+        <div className="bg-[#FEFDFC] rounded-lg p-6 shadow-sm border border-[#BCC8BC] h-full">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-bold text-[#2f362f]">Tasks Overview</h3>
+              <p className="text-sm text-[#2f362f]">
+                Distribution of tasks by status
+              </p>
             </div>
-          ))}
+            <CheckCircle className="w-5 h-5 text-blue-600" />
+          </div>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={tasksByStatus}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#fff",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                  }}
+                />
+                <Bar 
+                  dataKey="count" 
+                  radius={[4, 4, 0, 0]} 
+                  name="Number of Tasks"
+                  barSize={25}
+                  style={{
+                    filter: 'drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1))'
+                  }}
+                >
+                  {tasksByStatus.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={
+                        COLORS.taskStatus[entry.name] ||
+                        COLORS.primary[index % COLORS.primary.length]
+                      }
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Recent Activity */}
+        <div className="bg-[#FEFDFC] rounded-lg p-6 shadow-sm border border-[#BCC8BC] h-full">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-bold text-[#2f362f]">
+                Recent Activity
+              </h3>
+              <p className="text-sm text-[#2f362f]">
+                Latest updates across the system
+              </p>
+            </div>
+            <Clock className="w-5 h-5 text-[#2f362f]" />
+          </div>
+          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 transition-colors duration-200">
+            {[...deals, ...tasks, ...clients].slice(0, 5).map((item, index) => (
+              <div
+                key={index}
+                className="flex items-start p-3 rounded-lg transition-colors hover:bg-gray-50 border border-transparent hover:border-gray-200"
+              >
+                <div className="p-2 bg-blue-50 rounded-lg mr-4 flex-shrink-0 border border-blue-100">
+                  {item.dealName ? (
+                    <Briefcase className="w-5 h-5 text-blue-600" />
+                  ) : item.title ? (
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  ) : (
+                    <Users className="w-5 h-5 text-purple-600" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-medium text-[#2f362f] truncate">
+                    {item.dealName || item.title || item.name || "New item"}
+                  </h4>
+                  <p className="text-sm text-[#2f362f] truncate">
+                    {item.status && `Status: ${item.status} • `}
+                    {item.dealValue && `Value: ${item.dealValue} • `}
+                    {item.dueDate && `Due: ${item.dueDate}`}
+                  </p>
+                </div>
+                <span className="text-xs text-[#2f362f] whitespace-nowrap ml-2 text-opacity-70">
+                  {new Date().toLocaleDateString()}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

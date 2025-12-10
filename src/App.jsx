@@ -1,12 +1,9 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./store/store";
 import Layout from "./components/layout/Layout";
 import LoadingSpinner from "./components/shared/LoadingSpinner";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-// Lazy load pages for better performance
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const ClientsPage = lazy(() => import("./pages/ClientsPage"));
 const CompaniesPage = lazy(() => import("./pages/CompaniesPage"));
@@ -21,37 +18,30 @@ const CompanyDetailPage = lazy(() => import("./components/detail-pages/CompanyDe
 const SignInPage = lazy(() => import("./auth/SignInPage"));
 const RegisterPage = lazy(() => import("./auth/RegisterPage"));
 
-// Suspense wrapper component
-const SuspenseWrapper = ({ children }) => (
-  <Suspense fallback={<LoadingSpinner size="lg" text="Loading page..." />}>
-    {children}
-  </Suspense>
-);
+const PageLoader = () => <LoadingSpinner size="lg" text="Loading..." />;
 
 function App() {
   return (
     <ErrorBoundary>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/signin" element={<SuspenseWrapper><SignInPage /></SuspenseWrapper>} />
-            <Route path="/register" element={<SuspenseWrapper><RegisterPage /></SuspenseWrapper>} />
-            <Route path="/" element={<Layout />}>
-              <Route index element={<SuspenseWrapper><Dashboard /></SuspenseWrapper>} />
-              <Route path="clients" element={<SuspenseWrapper><ClientsPage /></SuspenseWrapper>} />
-              <Route path="clients/:id" element={<SuspenseWrapper><ClientDetailPage /></SuspenseWrapper>} />
-              <Route path="companies" element={<SuspenseWrapper><CompaniesPage /></SuspenseWrapper>} />
-              <Route path="companies/:id" element={<SuspenseWrapper><CompanyDetailPage /></SuspenseWrapper>} />
-              <Route path="deals" element={<SuspenseWrapper><DealsPage /></SuspenseWrapper>} />
-              <Route path="tasks" element={<SuspenseWrapper><TasksPage /></SuspenseWrapper>} />
-              <Route path="analytics" element={<SuspenseWrapper><AnalyticsPage /></SuspenseWrapper>} />
-              <Route path="reports" element={<SuspenseWrapper><ReportsPage /></SuspenseWrapper>} />
-              <Route path="settings" element={<SuspenseWrapper><SettingsPage /></SuspenseWrapper>} />
-              <Route path="help" element={<SuspenseWrapper><HelpSupportPage /></SuspenseWrapper>} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signin" element={<Suspense fallback={<PageLoader />}><SignInPage /></Suspense>} />
+          <Route path="/register" element={<Suspense fallback={<PageLoader />}><RegisterPage /></Suspense>} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Suspense fallback={<PageLoader />}><Dashboard /></Suspense>} />
+            <Route path="clients" element={<Suspense fallback={<PageLoader />}><ClientsPage /></Suspense>} />
+            <Route path="clients/:id" element={<Suspense fallback={<PageLoader />}><ClientDetailPage /></Suspense>} />
+            <Route path="companies" element={<Suspense fallback={<PageLoader />}><CompaniesPage /></Suspense>} />
+            <Route path="companies/:id" element={<Suspense fallback={<PageLoader />}><CompanyDetailPage /></Suspense>} />
+            <Route path="deals" element={<Suspense fallback={<PageLoader />}><DealsPage /></Suspense>} />
+            <Route path="tasks" element={<Suspense fallback={<PageLoader />}><TasksPage /></Suspense>} />
+            <Route path="analytics" element={<Suspense fallback={<PageLoader />}><AnalyticsPage /></Suspense>} />
+            <Route path="reports" element={<Suspense fallback={<PageLoader />}><ReportsPage /></Suspense>} />
+            <Route path="settings" element={<Suspense fallback={<PageLoader />}><SettingsPage /></Suspense>} />
+            <Route path="help" element={<Suspense fallback={<PageLoader />}><HelpSupportPage /></Suspense>} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </ErrorBoundary>
   );
 }

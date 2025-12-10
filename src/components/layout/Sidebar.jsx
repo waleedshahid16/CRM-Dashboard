@@ -16,6 +16,12 @@ import {
 } from "lucide-react";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
+  // Close sidebar when a navigation item is clicked (for mobile/tablet)
+  const handleNavigation = () => {
+    if (window.innerWidth < 1024) { // lg breakpoint
+      setIsOpen(false);
+    }
+  };
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", path: "/" },
     { icon: Users, label: "Clients", path: "/clients" },
@@ -80,6 +86,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   key={index}
                   to={item.path}
                   end={item.path === "/"}
+                  onClick={handleNavigation}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-3 rounded-lg transition-all ${
                       isActive
@@ -104,6 +111,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 <NavLink
                   key={index}
                   to={item.path}
+                  onClick={handleNavigation}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-3 rounded-lg transition-all ${
                       isActive
