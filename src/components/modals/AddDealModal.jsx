@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
+import RichTextEditor from "../common/RichTextEditor";
 import { addDeal, updateDeal } from "../../store/slices/dealsSlice";
 import {
   X,
@@ -772,85 +773,12 @@ const AddDealModal = ({ open, onClose, initialData = null, mode = "add" }) => {
                 name="description"
                 control={control}
                 render={({ field }) => (
-                  <div>
-                    <div className="border border-[#BCC8BC] rounded-md overflow-hidden bg-white">
-                      {/* Toolbar */}
-                      <div className="flex items-center gap-1 px-3 py-2 bg-[#FEFDFC] border-b border-slate-200">
-                        <select className="px-2 py-1 text-sm border border-[#BCC8BC] rounded bg-white">
-                          <option>Normal</option>
-                          <option>Heading 1</option>
-                          <option>Heading 2</option>
-                        </select>
-                        <div className="w-px h-6 bg-[#FEFDFC] mx-1"></div>
-                        <button
-                          type="button"
-                          className="p-1.5 hover:bg-slate-200 rounded transition-colors"
-                          title="Bold"
-                        >
-                          <Bold className="w-4 h-4" />
-                        </button>
-                        <button
-                          type="button"
-                          className="p-1.5 hover:bg-slate-200 rounded transition-colors"
-                          title="Italic"
-                        >
-                          <Italic className="w-4 h-4" />
-                        </button>
-                        <button
-                          type="button"
-                          className="p-1.5 hover:bg-slate-200 rounded transition-colors"
-                          title="Underline"
-                        >
-                          <Underline className="w-4 h-4" />
-                        </button>
-                        <div className="w-px h-6 bg-[#FEFDFC] mx-1"></div>
-                        <button
-                          type="button"
-                          className="p-1.5 hover:bg-slate-200 rounded transition-colors"
-                          title="Link"
-                        >
-                          <Link className="w-4 h-4" />
-                        </button>
-                        <div className="w-px h-6 bg-[#FEFDFC] mx-1"></div>
-                        <button
-                          type="button"
-                          className="p-1.5 hover:bg-slate-200 rounded transition-colors"
-                          title="Bullet List"
-                        >
-                          <List className="w-4 h-4" />
-                        </button>
-                        <button
-                          type="button"
-                          className="p-1.5 hover:bg-slate-200 rounded transition-colors"
-                          title="Numbered List"
-                        >
-                          <ListOrdered className="w-4 h-4" />
-                        </button>
-                        <div className="w-px h-6 bg-[#FEFDFC] mx-1"></div>
-                        <button
-                          type="button"
-                          className="p-1.5 hover:bg-slate-200 rounded transition-colors"
-                          title="Clear Formatting"
-                        >
-                          <Type className="w-4 h-4" />
-                        </button>
-                      </div>
-                      {/* Text Area */}
-                      <textarea
-                        {...field}
-                        placeholder="Enter deal description..."
-                        rows={6}
-                        className={`w-full px-2.5 py-3 resize-none border-none outline-none focus:ring-0 ${
-                          errors.description ? "bg-red-50" : ""
-                        }`}
-                      />
-                    </div>
-                    {errors.description && (
-                      <p className="text-xs text-red-500 mt-1">
-                        {errors.description.message}
-                      </p>
-                    )}
-                  </div>
+                  <RichTextEditor
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={errors.description?.message}
+                    placeholder="Enter deal description..."
+                  />
                 )}
               />
             </div>
@@ -872,7 +800,7 @@ const AddDealModal = ({ open, onClose, initialData = null, mode = "add" }) => {
               disabled={isSubmitting}
               className="px-4 py-2 text-sm sm:text-base font-medium text-[#2f362f] bg-blue-200 border border-transparent rounded-md shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Saving...' : 'Save Deal'}
+              {isSubmitting ? "Saving..." : "Save Deal"}
             </button>
           </div>
         </div>
