@@ -54,12 +54,12 @@ const SignInPage = () => {
       {/* Background Image for Mobile/Tablet - Behind Form */}
       <div className="absolute inset-0 lg:hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-500 to-cyan-400"></div>
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
       {/* Left Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 md:p-8 relative z-10">
-        <div className="w-full max-w-md bg-[#f8faf9] lg:bg-transparent rounded-2xl lg:rounded-none shadow-2xl lg:shadow-none p-6 sm:p-8 lg:p-0">
+        <div className="w-full max-w-md bg-white/80 backdrop-blur-md lg:bg-transparent rounded-2xl lg:rounded-none shadow-2xl lg:shadow-none p-6 sm:p-8 lg:p-0">
           {/* Logo/Brand */}
           <div className="mb-4 sm:mb-6">
             <div className="flex items-center gap-2 sm:gap-3 mb-2">
@@ -98,7 +98,7 @@ const SignInPage = () => {
                   type="email"
                   {...register("email")}
                   placeholder="Enter your email"
-                  className={`w-full pl-9 sm:pl-11 pr-3 sm:pr-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
+                  className={`w-full pl-9 sm:pl-11 pr-3 sm:pr-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all bg-white/90 ${
                     errors.email ? "border-red-500" : "border-[#BCC8BC]"
                   }`}
                 />
@@ -121,7 +121,7 @@ const SignInPage = () => {
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   placeholder="••••••••••"
-                  className={`w-full pl-9 sm:pl-11 pr-10 sm:pr-12 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
+                  className={`w-full pl-9 sm:pl-11 pr-10 sm:pr-12 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all bg-white/90 ${
                     errors.password ? "border-red-500" : "border-[#BCC8BC]"
                   }`}
                 />
@@ -180,7 +180,7 @@ const SignInPage = () => {
                 <div className="w-full border-t border-[#BCC8BC]"></div>
               </div>
               <div className="relative flex justify-center text-xs sm:text-sm">
-                <span className="px-3 sm:px-4 bg-[#f8faf9] text-[#2f362f]">
+                <span className="px-3 sm:px-4 bg-white/80 lg:bg-transparent text-[#2f362f]">
                   Or continue with
                 </span>
               </div>
@@ -190,7 +190,7 @@ const SignInPage = () => {
             <button
               type="button"
               onClick={handleGoogleSignIn}
-              className="w-full flex items-center justify-center gap-2 sm:gap-3 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-[#BCC8BC] rounded-md font-semibold text-[#2f362f] hover:bg-[#FEFDFC] transition-all"
+              className="w-full flex items-center justify-center gap-2 sm:gap-3 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-[#BCC8BC] rounded-md font-semibold text-[#2f362f] hover:bg-white/50 bg-white/90 transition-all"
             >
               <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
                 <path
