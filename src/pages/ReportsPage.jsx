@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/static-components */
 /* eslint-disable no-unused-vars */
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   BarChart,
@@ -39,7 +39,28 @@ const selectAllTasks = (state) => state?.tasks?.tasks || [];
 
 const ReportsPage = () => {
   // Navigation
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
+  // Responsive state
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Chart responsive settings
+  const chartHeight = isMobile ? 250 : 300;
+  const barSize = isMobile ? 20 : 30;
+  const pieOuterRadius = isMobile ? 80 : 100;
+  const xAxisAngle = isMobile ? -90 : -45;
+  
   // Get data from Redux
   const clients = useSelector(selectAllClients);
   const companies = useSelector(selectAllCompanies);
@@ -273,44 +294,48 @@ const ReportsPage = () => {
             <Briefcase className="w-5 h-5 text-blue-600" />
           </div>
           <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={dealsByStage}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis
-                  dataKey="name"
-                  tick={{ fontSize: 12 }}
-                  angle={-45}
-                  textAnchor="end"
-                  height={60}
-                />
-                <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    border: "1px solid #e2e8f0",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                  }}
-                />
-                <Bar
-                  dataKey="count"
-                  fill="#667eea"
-                  radius={[4, 4, 0, 0]}
-                  name="Number of Deals"
-                  barSize={25}
-                  style={{
-                    filter: 'drop-shadow(0 2px 2px rgba(102, 126, 234, 0.2))'
-                  }}
-                >
-                  {dealsByStage.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS.primary[index % COLORS.primary.length]}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <div className="w-full" style={{ height: `${chartHeight}px` }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={dealsByStage}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fontSize: isMobile ? 10 : 12 }}
+                    angle={xAxisAngle}
+                    textAnchor={isMobile ? 'end' : 'middle'}
+                    height={isMobile ? 100 : 80}
+                    interval={0}
+                    minTickGap={isMobile ? -10 : 0}
+                  />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      border: "1px solid #e2e8f0",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Bar
+                    dataKey="count"
+                    fill="#667eea"
+                    radius={[4, 4, 0, 0]}
+                    name="Number of Deals"
+                    barSize={barSize}
+                    style={{
+                      filter: 'drop-shadow(0 2px 2px rgba(102, 126, 234, 0.2))'
+                    }}
+                  >
+                    {dealsByStage.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS.primary[index % COLORS.primary.length]}
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
 
@@ -329,47 +354,49 @@ const ReportsPage = () => {
           </div>
           <div className="h-80">
             {dealsByStatus.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={dealsByStatus}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) =>
-                      `${name}: ${(percent * 100).toFixed(0)}%`
-                    }
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {dealsByStatus.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={
-                          entry.name === "Won"
-                            ? COLORS.success
-                            : entry.name === "Active"
-                            ? COLORS.info
-                            : entry.name === "Lost"
-                            ? COLORS.danger
-                            : COLORS.primary[index % COLORS.primary.length]
-                        }
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(value, name, props) => [value, `${name} Deals`]}
-                    contentStyle={{
-                      backgroundColor: "#fff",
-                      border: "1px solid #e2e8f0",
-                      borderRadius: "8px",
-                      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
+              <div className="w-full" style={{ height: `${chartHeight}px` }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={dealsByStatus}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, percent }) =>
+                        isMobile ? `${(percent * 100).toFixed(0)}%` : `${name} ${(percent * 100).toFixed(0)}%`
+                      }
+                      outerRadius={pieOuterRadius}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {dealsByStatus.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={
+                            entry.name === "Won"
+                              ? COLORS.success
+                              : entry.name === "Active"
+                              ? COLORS.info
+                              : entry.name === "Lost"
+                              ? COLORS.danger
+                              : COLORS.primary[index % COLORS.primary.length]
+                          }
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      formatter={(value, name, props) => [value, `${name} Deals`]}
+                      contentStyle={{
+                        backgroundColor: "#fff",
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                      }}
+                    />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             ) : (
               <div className="h-full flex items-center justify-center text-[#2f362f]">
                 No deal data available
@@ -381,7 +408,7 @@ const ReportsPage = () => {
 
       {/* Tasks Overview and Recent Activity in a row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Tasks Overview - Updated to match TasksPage statuses */}
+        {/* Tasks Overview */}
         <div className="bg-[#FEFDFC] rounded-lg p-6 shadow-sm border border-[#BCC8BC] h-full">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -393,40 +420,42 @@ const ReportsPage = () => {
             <CheckCircle className="w-5 h-5 text-blue-600" />
           </div>
           <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={tasksByStatus}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    border: "1px solid #e2e8f0",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                  }}
-                />
-                <Bar 
-                  dataKey="count" 
-                  radius={[4, 4, 0, 0]} 
-                  name="Number of Tasks"
-                  barSize={25}
-                  style={{
-                    filter: 'drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1))'
-                  }}
-                >
-                  {tasksByStatus.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={
-                        COLORS.taskStatus[entry.name] ||
-                        COLORS.primary[index % COLORS.primary.length]
-                      }
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <div className="w-full" style={{ height: `${chartHeight}px` }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={tasksByStatus}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      border: "1px solid #e2e8f0",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Bar
+                    dataKey="count"
+                    radius={[4, 4, 0, 0]}
+                    name="Number of Tasks"
+                    barSize={barSize}
+                    style={{
+                      filter: 'drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1))'
+                    }}
+                  >
+                    {tasksByStatus.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={
+                          COLORS.taskStatus[entry.name] ||
+                          COLORS.primary[index % COLORS.primary.length]
+                        }
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/static-components */
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   BarChart,
@@ -38,6 +38,24 @@ const selectAllTasks = (state) => state?.tasks?.tasks || [];
 
 const AnalyticsPage = () => {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Chart responsive settings
+  const chartHeight = isMobile ? 250 : 300;
+  const barSize = isMobile ? 20 : 30;
+  const pieOuterRadius = isMobile ? 80 : 100;
+  const xAxisAngle = isMobile ? -90 : -45;
   // Get data from Redux
   const clients = useSelector(selectAllClients);
   const companies = useSelector(selectAllCompanies);
@@ -324,15 +342,18 @@ const AnalyticsPage = () => {
             </div>
             <Activity className="w-5 h-5 text-blue-600" />
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <div className="w-full" style={{ height: `${chartHeight}px` }}>
+            <ResponsiveContainer width="100%" height="100%">
             <BarChart data={dealsByStage}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
               <XAxis
                 dataKey="name"
-                tick={{ fontSize: 12 }}
-                angle={-45}
-                textAnchor="end"
-                height={80}
+                tick={{ fontSize: isMobile ? 10 : 12 }}
+                angle={xAxisAngle}
+                textAnchor={isMobile ? 'end' : 'middle'}
+                height={isMobile ? 100 : 80}
+                interval={0}
+                minTickGap={isMobile ? -10 : 0}
               />
               <YAxis tick={{ fontSize: 12 }} />
               <Tooltip
@@ -347,13 +368,14 @@ const AnalyticsPage = () => {
                 dataKey="count" 
                 fill="#667eea" 
                 radius={[4, 4, 0, 0]}
-                barSize={30}
+                barSize={barSize}
                 style={{
                   filter: 'drop-shadow(0 2px 2px rgba(102, 126, 234, 0.2))'
                 }}
               />
             </BarChart>
-          </ResponsiveContainer>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         {/* Deals by Status (Pie) */}
@@ -367,17 +389,18 @@ const AnalyticsPage = () => {
             </div>
             <Briefcase className="w-5 h-5 text-purple-600" />
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <div className="w-full" style={{ height: `${chartHeight}px` }}>
+            <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={dealsByStatus}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ name, percent }) =>
-                  `${name} ${(percent * 100).toFixed(0)}%`
-                }
-                outerRadius={100}
+                label={({ name, percent }) => (
+                  isMobile ? `${(percent * 100).toFixed(0)}%` : `${name} ${(percent * 100).toFixed(0)}%`
+                )}
+                outerRadius={pieOuterRadius}
                 fill="#8884d8"
                 dataKey="value"
               >
@@ -390,7 +413,8 @@ const AnalyticsPage = () => {
               </Pie>
               <Tooltip />
             </PieChart>
-          </ResponsiveContainer>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
 
@@ -409,7 +433,8 @@ const AnalyticsPage = () => {
             </div>
             <TrendingUp className="w-5 h-5 text-green-600" />
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <div className="w-full" style={{ height: `${chartHeight}px` }}>
+            <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={monthlyTrend}>
               <defs>
                 <linearGradient id="colorDeals" x1="0" y1="0" x2="0" y2="1">
@@ -435,7 +460,8 @@ const AnalyticsPage = () => {
                 fill="url(#colorDeals)"
               />
             </AreaChart>
-          </ResponsiveContainer>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         {/* Companies by Industry */}
@@ -449,7 +475,8 @@ const AnalyticsPage = () => {
             </div>
             <Briefcase className="w-5 h-5 text-orange-600" />
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <div className="w-full" style={{ height: `${chartHeight}px` }}>
+            <ResponsiveContainer width="100%" height="100%">
             <BarChart data={companiesByIndustry} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
               <XAxis type="number" tick={{ fontSize: 12 }} />
@@ -468,7 +495,8 @@ const AnalyticsPage = () => {
               />
               <Bar dataKey="value" fill="#f97316" radius={[0, 8, 8, 0]} />
             </BarChart>
-          </ResponsiveContainer>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
 
