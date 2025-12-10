@@ -3,18 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {
-  Mail,
-  Lock,
-  User,
-  Eye,
-  EyeOff,
-  Users,
-  Briefcase,
-  Calendar,
-  Shield,
-} from "lucide-react";
-import SignUpImg from "../assets/sign-in-pic/crm.webp";
+import { Mail, Lock, User, Eye, EyeOff, Users } from "lucide-react";
 
 // Validation Schema for Register
 const registerSchema = yup
@@ -65,18 +54,18 @@ const RegisterPage = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log("Register Data:", data);
-      window.location.href = "/";
+      alert("Account created successfully!");
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   const handleGoogleSignUp = () => {
-    window.location.href = "/";
+    alert("Google Sign Up clicked!");
   };
 
   const goToSignIn = () => {
-    window.location.href = "/signin";
+    alert("Navigate to Sign In");
   };
 
   // Password strength indicator
@@ -106,55 +95,61 @@ const RegisterPage = () => {
   const passwordStrength = getPasswordStrength();
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex relative">
+      {/* Background Image for Mobile/Tablet - Behind Form */}
+      <div className="absolute inset-0 lg:hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-500 to-cyan-400"></div>
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+      </div>
+
       {/* Left Side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-[#f8faf9]">
-        <div className="w-full max-w-md">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 md:p-8 relative z-10">
+        <div className="w-full max-w-md bg-[#f8faf9] lg:bg-transparent rounded-2xl lg:rounded-none shadow-2xl lg:shadow-none p-6 sm:p-8 lg:p-0">
           {/* Logo/Brand */}
-          <div className="mb-6">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-12 h-12  bg-[#2f362f]  rounded-full flex items-center justify-center shadow-lg">
-                <Users className="w-7 h-7 text-white" />
+          <div className="mb-4 sm:mb-6">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2f362f] rounded-full flex items-center justify-center shadow-lg">
+                <Users className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </div>
-              <span className="text-2xl font-bold text-[#2f362f]">
+              <span className="text-xl sm:text-2xl font-bold text-[#2f362f]">
                 ClientHub
               </span>
             </div>
-            <p className="text-[#2f362f]/80 text-sm ml-1">
+            <p className="text-[#2f362f]/80 text-xs sm:text-sm ml-0.5 sm:ml-1">
               Your Business Growth Partner
             </p>
           </div>
 
           {/* Welcome Text */}
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-[#2f362f] mb-2">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#2f362f] mb-1 sm:mb-2">
               GET STARTED
             </h1>
-            <p className="text-[#2f362f]/80">
+            <p className="text-sm sm:text-base text-[#2f362f]/80">
               Create your account to start managing your business.
             </p>
           </div>
 
           {/* Form */}
-          <div className="space-y-3">
+          <div className="space-y-2.5 sm:space-y-3">
             {/* Full Name Field */}
             <div>
-              <label className="block text-sm font-semibold text-[#2f362f] mb-2">
+              <label className="block text-xs sm:text-sm font-semibold text-[#2f362f] mb-1.5 sm:mb-2">
                 Full Name
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#2f362f]" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-[#2f362f]" />
                 <input
                   type="text"
                   {...register("fullName")}
                   placeholder="John Doe"
-                  className={`w-full pl-11 pr-4 py-2 border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
+                  className={`w-full pl-9 sm:pl-11 pr-3 sm:pr-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
                     errors.fullName ? "border-red-500" : "border-[#BCC8BC]"
                   }`}
                 />
               </div>
               {errors.fullName && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-[10px] sm:text-xs text-red-500 mt-1">
                   {errors.fullName.message}
                 </p>
               )}
@@ -162,22 +157,22 @@ const RegisterPage = () => {
 
             {/* Email Field */}
             <div>
-              <label className="block text-sm font-semibold text-[#2f362f] mb-2">
+              <label className="block text-xs sm:text-sm font-semibold text-[#2f362f] mb-1.5 sm:mb-2">
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#2f362f]" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-[#2f362f]" />
                 <input
                   type="email"
                   {...register("email")}
                   placeholder="Enter your email"
-                  className={`w-full pl-11 pr-4 py-2 border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
+                  className={`w-full pl-9 sm:pl-11 pr-3 sm:pr-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
                     errors.email ? "border-red-500" : "border-[#BCC8BC]"
                   }`}
                 />
               </div>
               {errors.email && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-[10px] sm:text-xs text-red-500 mt-1">
                   {errors.email.message}
                 </p>
               )}
@@ -185,16 +180,16 @@ const RegisterPage = () => {
 
             {/* Password Field */}
             <div>
-              <label className="block text-sm font-semibold text-[#2f362f] mb-2">
+              <label className="block text-xs sm:text-sm font-semibold text-[#2f362f] mb-1.5 sm:mb-2">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#2f362f]" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-[#2f362f]" />
                 <input
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   placeholder="••••••••••"
-                  className={`w-full pl-11 pr-12 py-2 border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
+                  className={`w-full pl-9 sm:pl-11 pr-10 sm:pr-12 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
                     errors.password ? "border-red-500" : "border-[#BCC8BC]"
                   }`}
                 />
@@ -204,14 +199,14 @@ const RegisterPage = () => {
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2f362f] hover:text-[#788978]"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
+                    <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" />
                   ) : (
-                    <Eye className="w-5 h-5" />
+                    <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                   )}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-[10px] sm:text-xs text-red-500 mt-1">
                   {errors.password.message}
                 </p>
               )}
@@ -231,8 +226,8 @@ const RegisterPage = () => {
                       />
                     ))}
                   </div>
-                  <p className="text-xs text-[#2f362f]">
-                    Password strength:
+                  <p className="text-[10px] sm:text-xs text-[#2f362f]">
+                    Password strength:{" "}
                     <span className="font-semibold">
                       {passwordStrength.label}
                     </span>
@@ -243,16 +238,16 @@ const RegisterPage = () => {
 
             {/* Confirm Password Field */}
             <div>
-              <label className="block text-sm font-semibold text-[#2f362f] mb-2">
+              <label className="block text-xs sm:text-sm font-semibold text-[#2f362f] mb-1.5 sm:mb-2">
                 Confirm Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#2f362f]" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-[#2f362f]" />
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   {...register("confirmPassword")}
                   placeholder="••••••••••"
-                  className={`w-full pl-11 pr-12 py-2 border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
+                  className={`w-full pl-9 sm:pl-11 pr-10 sm:pr-12 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#788978] focus:border-transparent transition-all ${
                     errors.confirmPassword
                       ? "border-red-500"
                       : "border-[#BCC8BC]"
@@ -264,14 +259,14 @@ const RegisterPage = () => {
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2f362f] hover:text-[#788978]"
                 >
                   {showConfirmPassword ? (
-                    <EyeOff className="w-5 h-5" />
+                    <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" />
                   ) : (
-                    <Eye className="w-5 h-5" />
+                    <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                   )}
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-[10px] sm:text-xs text-red-500 mt-1">
                   {errors.confirmPassword.message}
                 </p>
               )}
@@ -279,16 +274,16 @@ const RegisterPage = () => {
 
             {/* Terms and Conditions */}
             <div className="flex flex-col">
-              <label className="flex items-center gap-2 cursor-pointer">
+              <label className="flex items-start gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   {...register("agreeToTerms")}
-                  className={`w-4 h-4 border-2 rounded focus:ring-2 focus:ring-[#788978] text-[#788978] ${
+                  className={`w-4 h-4 mt-0.5 border-2 rounded focus:ring-2 focus:ring-[#788978] text-[#788978] flex-shrink-0 ${
                     errors.agreeToTerms ? "border-red-500" : "border-[#BCC8BC]"
                   }`}
                 />
 
-                <span className="text-sm text-[#2f362f] leading-tight">
+                <span className="text-xs sm:text-sm text-[#2f362f] leading-tight">
                   I agree to the{" "}
                   <button
                     type="button"
@@ -307,7 +302,7 @@ const RegisterPage = () => {
               </label>
 
               {errors.agreeToTerms && (
-                <p className="text-xs text-red-500 mt-1 ml-6">
+                <p className="text-[10px] sm:text-xs text-red-500 mt-1 ml-6">
                   {errors.agreeToTerms.message}
                 </p>
               )}
@@ -317,7 +312,7 @@ const RegisterPage = () => {
             <button
               onClick={handleSubmit(onSubmit)}
               disabled={isSubmitting}
-              className="w-full  bg-[#2f362f]  text-white py-2 rounded-md font-semibold hover:opacity-90 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#2f362f] text-white py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-semibold hover:opacity-90 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Creating Account..." : "Create Account"}
             </button>
@@ -327,8 +322,8 @@ const RegisterPage = () => {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-[#BCC8BC]"></div>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2.5 bg-[#f8faf9] text-[#2f362f]">
+              <div className="relative flex justify-center text-xs sm:text-sm">
+                <span className="px-2 sm:px-2.5 bg-[#f8faf9] text-[#2f362f]">
                   Or sign up with
                 </span>
               </div>
@@ -338,9 +333,9 @@ const RegisterPage = () => {
             <button
               type="button"
               onClick={handleGoogleSignUp}
-              className="w-full flex items-center justify-center gap-3 py-2 border-2 border-[#BCC8BC] rounded-md font-semibold text-[#2f362f] hover:bg-[#FEFDFC] transition-all"
+              className="w-full flex items-center justify-center gap-2 sm:gap-3 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-[#BCC8BC] rounded-md font-semibold text-[#2f362f] hover:bg-[#FEFDFC] transition-all"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -363,8 +358,8 @@ const RegisterPage = () => {
           </div>
 
           {/* Sign In Link */}
-          <p className="text-center mt-4 text-sm text-[#2f362f]">
-            Already have an account?
+          <p className="text-center mt-3 sm:mt-4 text-xs sm:text-sm text-[#2f362f]">
+            Already have an account?{" "}
             <button
               onClick={goToSignIn}
               className="font-bold text-[#2f362f] hover:text-[#788978] transition-colors"
@@ -375,14 +370,9 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      {/* Right Side - Image */}
+      {/* Right Side - Image (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-[#2f362f]">
-        {/* CRM Image - Full coverage */}
-        <img
-          src={SignUpImg}
-          alt="CRM Dashboard"
-          className="w-full h-full object-cover"
-        />
+        <div className="w-full h-full bg-gradient-to-br from-purple-600 via-blue-500 to-cyan-400"></div>
       </div>
     </div>
   );
