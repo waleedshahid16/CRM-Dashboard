@@ -74,7 +74,7 @@ const SignInPage = () => {
       {/* Left Side - Form */}
       <div className="relative z-10 flex items-center justify-center w-full p-4 lg:w-1/2 sm:p-6 md:p-8">
         {/* Form Container with transparency for mobile/tablet */}
-        <div className="w-full max-w-md p-6 shadow-2xl bg-white/95 lg:bg-white backdrop-blur-sm lg:backdrop-blur-none rounded-2xl lg:rounded-none lg:shadow-none sm:p-8 md:p-10">
+        <div className="w-full max-w-md p-6 shadow-2xl md:max-w-xl lg:max-w-md bg-white/85 md:bg-white/80 lg:bg-white backdrop-blur-md lg:backdrop-blur-none rounded-2xl lg:rounded-none lg:shadow-none sm:p-8 md:p-12 lg:p-10">
           {/* Logo/Brand */}
           <div className="mb-4 sm:mb-6">
             <div className="flex items-center gap-2 mb-2 sm:gap-3">
@@ -193,7 +193,7 @@ const SignInPage = () => {
                 <div className="w-full border-t border-[#BCC8BC]"></div>
               </div>
               <div className="relative flex justify-center text-xs sm:text-sm">
-                <span className="px-3 sm:px-4 bg-white/95 lg:bg-[#f8faf9] text-[#2f362f]">
+                <span className="px-3 sm:px-4 bg-white/90 lg:bg-[#f8faf9] text-[#2f362f]">
                   Or continue with
                 </span>
               </div>
